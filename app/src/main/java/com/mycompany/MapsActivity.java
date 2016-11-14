@@ -18,9 +18,26 @@ import com.mycompany.daummapapptest.R;
 import net.daum.mf.map.api.MapPOIItem;
 import net.daum.mf.map.api.MapPoint;
 import net.daum.mf.map.api.MapView;
+import net.daum.mf.map.api.MapCircle;
+import android.graphics.Color;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.InputSource;
+import java.net.URL;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import android.app.Activity;
+import android.os.AsyncTask;
+import android.widget.TextView;
 
 public class MapsActivity extends AppCompatActivity implements MapView.MapViewEventListener,MapView.CurrentLocationEventListener, MapView.POIItemEventListener {
     private static final String DAUM_API_KEY = "295d7ff2170cfd95de1181ca721e3d9c";
+    TextView textview;
+    Document doc = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,13 +74,14 @@ public class MapsActivity extends AppCompatActivity implements MapView.MapViewEv
 
             @Override
             public void onClick(View v) {
-                Toast.makeText(MapsActivity.this, "11111", Toast.LENGTH_SHORT).show();
                 Log.d("log","11111");
                 if(chk[0]){
+                    Toast.makeText(MapsActivity.this, "나침반모드 온", Toast.LENGTH_SHORT).show();
                     Log.d("log","true");
                     chk[0] = false;
                     mapView.setCurrentLocationTrackingMode(MapView.CurrentLocationTrackingMode.TrackingModeOnWithHeading);//현재위치이동 나침반모드
                 }else {
+                    Toast.makeText(MapsActivity.this, "나침반모드 오프", Toast.LENGTH_SHORT).show();
                     Log.d("log","false");
                     chk[0] = true;
                     mapView.setCurrentLocationTrackingMode(MapView.CurrentLocationTrackingMode.TrackingModeOff);
@@ -72,21 +90,31 @@ public class MapsActivity extends AppCompatActivity implements MapView.MapViewEv
             }
         });
 
-        FloatingActionButton fab2 = (FloatingActionButton)findViewById(R.id.check);
+        final boolean[] chk2 = {true}; //현제위치이동 기능 체크 변수
+        FloatingActionButton fab2 = (FloatingActionButton)findViewById(R.id.check); //현제위치체크 플로팅 버튼
         fab2.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                Toast.makeText(MapsActivity.this, "22222", Toast.LENGTH_SHORT).show();
                 Log.d("log","22222");
-                mapView.setCurrentLocationTrackingMode(MapView.CurrentLocationTrackingMode.TrackingModeOnWithoutHeading);
+                if(chk2[0]){
+                    Toast.makeText(MapsActivity.this, "현재위치 트래킹 온", Toast.LENGTH_SHORT).show();
+                    Log.d("log","true");
+                    chk2[0] = false;
+                    mapView.setCurrentLocationTrackingMode(MapView.CurrentLocationTrackingMode.TrackingModeOnWithoutHeading);//현재위치이동
+                }else {
+                    Toast.makeText(MapsActivity.this, "현재위치 트래킹 오프", Toast.LENGTH_SHORT).show();
+                    Log.d("log","false");
+                    chk2[0] = true;
+                    mapView.setCurrentLocationTrackingMode(MapView.CurrentLocationTrackingMode.TrackingModeOff);
+                }
             }
         });
-
     }
 
     @Override
     public void onMapViewInitialized(MapView mapView) {
-
+        Toast.makeText(MapsActivity.this, "Initialized...", Toast.LENGTH_SHORT).show();
+        Log.d("log","Initialized");
     }
 
     @Override
@@ -169,4 +197,7 @@ public class MapsActivity extends AppCompatActivity implements MapView.MapViewEv
     public void onDraggablePOIItemMoved(MapView mapView, MapPOIItem mapPOIItem, MapPoint mapPoint) {
 
     }
+
+
+
 }
