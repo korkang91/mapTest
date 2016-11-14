@@ -38,7 +38,7 @@ public class MapsActivity extends AppCompatActivity implements MapView.MapViewEv
         mapView.setMapViewEventListener(this);
         mapView.setPOIItemEventListener(this);
         mapView.setCurrentLocationEventListener(this);
-
+// test
 //        mapView.setCurrentLocationTrackingMode(MapView.CurrentLocationTrackingMode.TrackingModeOnWithHeadingWithoutMapMoving);
 //        mapView.setMapCenterPoint(MapPoint.mapPointWithGeoCoord(37.570705,126.958008),true); //초기 지도 위치 설정
 
