@@ -35,8 +35,6 @@ import android.widget.TextView;
 
 public class MapsActivity extends AppCompatActivity implements MapView.MapViewEventListener,MapView.CurrentLocationEventListener, MapView.POIItemEventListener {
     private static final String DAUM_API_KEY = "295d7ff2170cfd95de1181ca721e3d9c";
-    TextView textview;
-    Document doc = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,16 +47,15 @@ public class MapsActivity extends AppCompatActivity implements MapView.MapViewEv
         ViewGroup viewGroup = (ViewGroup) findViewById(R.id.fl_maps); //인수로 참조할 아이디R.id.fl_maps 전달
         viewGroup.addView(mapView);
 
+
         mapView.setDefaultCurrentLocationMarker();
         mapView.setShowCurrentLocationMarker(true);
 
         mapView.setMapViewEventListener(this);
         mapView.setPOIItemEventListener(this);
         mapView.setCurrentLocationEventListener(this);
-// test
-//        mapView.setCurrentLocationTrackingMode(MapView.CurrentLocationTrackingMode.TrackingModeOnWithHeadingWithoutMapMoving);
-//        mapView.setMapCenterPoint(MapPoint.mapPointWithGeoCoord(37.570705,126.958008),true); //초기 지도 위치 설정
 
+        //권한설정 팝업
         int permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION);
         if(permissionCheck== PackageManager.PERMISSION_DENIED){
             Log.d("log","deny permission");
@@ -67,11 +64,10 @@ public class MapsActivity extends AppCompatActivity implements MapView.MapViewEv
             Log.d("log","access permission");
         }
 
-//        MapView.CurrentLocationEventListener;
+
         final boolean[] chk = {true};
         FloatingActionButton fab1 = (FloatingActionButton)findViewById(R.id.mylocation);
         fab1.setOnClickListener(new View.OnClickListener(){
-
             @Override
             public void onClick(View v) {
                 Log.d("log","11111");
@@ -109,6 +105,17 @@ public class MapsActivity extends AppCompatActivity implements MapView.MapViewEv
                 }
             }
         });
+
+//        final boolean[] chk3 = {true}; //현제위치이동 기능 체크 변수
+//        FloatingActionButton fab3 = (FloatingActionButton)findViewById(R.id.zoombtn); //현제위치체크 플로팅 버튼
+//        fab3.setOnClickListener(new View.OnClickListener(){
+//            @Override
+//            public void onClick(View v) {
+//                Log.d("log","33333");
+//                int zlevel = mapView.getZoomLevel();
+//                Toast.makeText(MapsActivity.this, zlevel, Toast.LENGTH_SHORT).show();
+//            }
+//        });
     }
 
     @Override
